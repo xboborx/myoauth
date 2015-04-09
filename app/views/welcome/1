@@ -1,0 +1,52 @@
+<div class="container">
+
+      <div class="page-header" id="banner">
+        <div class="row">
+          <div class="col-lg-8 col-md-7 col-sm-6">
+            <h1>Регистрация</h1>
+            <p class="lead">Введите регистрационные данные</p>
+          </div>
+        </div>
+      </div>
+
+<%= form_tag '/test', class: "form-horizontal" do %>
+  <fieldset>
+    <div class="form-group">
+      <%= label_tag(:inputEmail, "E-mail", class: 'col-lg-2 control-label')  %>
+      <div class="col-lg-10">
+        <%= email_field_tag(:inputEmail, "E-mail" , class: 'form-control') %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= label_tag(:inputPassword, "Пароль", class: 'col-lg-2 control-label')  %>
+      <div class="col-lg-10">
+        <%= password_field_tag(:inputPassword, "Пароль" , class: 'form-control') %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= label_tag(:inputName, "Имя", class: 'col-lg-2 control-label')  %>
+      <div class="col-lg-10">
+        <%= text_field_tag(:inputName, "Имя" , class: 'form-control') %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= label_tag(:inputSurname, "Фамилия", class: 'col-lg-2 control-label')  %>
+      <div class="col-lg-10">
+        <%= text_field_tag(:inputSurname, "Фамилия" , class: 'form-control') %>
+      </div>
+    </div>
+
+    <%= submit_tag("GO!")  %>
+  
+  </fieldset>
+<% end %>
+
+
+
+
+
+</div>
+
