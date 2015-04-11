@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150407083621) do
+ActiveRecord::Schema.define(version: 20150409094319) do
 
   create_table "oauth_users", force: :cascade do |t|
     t.string "username"
@@ -19,5 +19,7 @@ ActiveRecord::Schema.define(version: 20150407083621) do
     t.string "first_name"
     t.string "last_name"
   end
+
+  add_index "oauth_users", ["username"], name: "index_oauth_users_on_username", unique: true
 
 end

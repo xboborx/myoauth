@@ -6,6 +6,14 @@ Rails.application.routes.draw do
   get 'welcome/index'
   post 'welcome/adduser'
 
+  get '/login' => 'sessions#new'
+  post '/login' => 'sessions#create'
+  get '/logout' => 'sessions#destroy'
+
+  get '/signup' => 'users#new'
+  post '/users' => 'users#create'
+
+
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 

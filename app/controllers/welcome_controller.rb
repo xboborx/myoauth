@@ -1,11 +1,10 @@
 class WelcomeController < ApplicationController
-
   def index
-    
+      
   end
 
   def registration
-
+    
   end
 
   def adduser
@@ -14,6 +13,6 @@ class WelcomeController < ApplicationController
     name = params[:inputName]
     surname = params[:inputSurname]
 
-    ::OauthUser.new(username: email, password: password, first_name: name, last_name: surname)
+    OauthUser.create(username: email, password: password, first_name: name, last_name: surname)
   end
 end
