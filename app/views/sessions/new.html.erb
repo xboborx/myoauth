@@ -1,9 +1,35 @@
-<h1>Login</h1>
+<div class="container">
+  <div class="page-header" id="banner">
+    <div class="row">
+      <div class="col-lg-8 col-md-7 col-sm-6">
+        <h1> Войти </h1>
+        <p class="lead">Введите данные для входа</p>
+      </div>
+    </div>
+  </div>
 
-<%= form_tag '/login' do %>
 
-  Email: <%= text_field_tag :email %>
-  Password: <%= password_field_tag :password %>
-  <%= submit_tag "Submit" %>
+<%= form_tag '/login', class: "form-horizontal" do %>
+  <fieldset>
+    <div class="form-group">
+      <%= label_tag(:email, "E-mail", class: 'col-lg-2 control-label') %>
+      <div class="col-lg-10">
+        <%= email_field_tag(:email, "E-mail", class: 'form-control') %>
+      </div>
+    </div>
 
+    <div class="form-group">
+      <%= label_tag(:password, "Пароль", class: 'col-lg-2 control-label') %> 
+        <div class="col-lg-10">
+          <%= password_field_tag(:password, "Пароль", class: 'form-control') %>
+        </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <%= submit_tag("Вход", class: 'btn btn-primary') %>
+      </div>
+    </div>
+  </fieldset>
 <% end %>
+
+</div>
