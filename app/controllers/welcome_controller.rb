@@ -1,6 +1,9 @@
 class WelcomeController < ApplicationController
   def index
-      
+    puts "______________"
+    user = OauthUser.find(session[:user_id]) if session[:user_id]
+    puts user.oauth_clients
+    puts "______________"
   end
 
   def registration

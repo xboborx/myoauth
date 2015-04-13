@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150411195013) do
+ActiveRecord::Schema.define(version: 20150413083144) do
+
+  create_table "oauth_clients", force: :cascade do |t|
+    t.string  "client_id"
+    t.string  "client_secret"
+    t.integer "oauth_user_id"
+  end
+
+  add_index "oauth_clients", ["oauth_user_id"], name: "index_oauth_clients_on_oauth_user_id"
 
   create_table "oauth_users", force: :cascade do |t|
     t.string "username"
