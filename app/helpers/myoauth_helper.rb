@@ -1,0 +1,2 @@
+module MyoauthHelper
+end

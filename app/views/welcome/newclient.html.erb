@@ -1,0 +1,27 @@
+<div class="container">
+  <% if current_user %>
+    <h1>Добавление клиентского приложения</h1>
+
+      <%= form_tag '/addclient', class: "form-horizontal" do %>
+          <fieldset>
+            <div class="form-group">
+              <%= label_tag(:clientname, "Название клиентского приложения", class: 'col-lg-2 control-label') %>
+              <div class="col-lg-10">
+                <%= text_field_tag(:clientname, nil, class: 'form-control') %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <%= submit_tag("Добавить", class: 'btn btn-primary') %>
+              </div>
+            </div>
+          </fieldset>
+      <% end %>
+
+  <% else %>
+      <div class="page-header">
+        <h2>Для просмотра данных необходимо авторизоваться</h2>
+      </div>
+  <% end %>
+
+ </div>

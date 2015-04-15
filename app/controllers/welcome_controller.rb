@@ -1,13 +1,33 @@
 class WelcomeController < ApplicationController
   def index
-    puts "______________"
     user = OauthUser.find(session[:user_id]) if session[:user_id]
-    puts user.oauth_clients
-    puts "______________"
+    @clients = user.oauth_clients if session[:user_id]
   end
 
-  def registration
-    
+  def newclient
+    if session[:user_id]
+      user = OauthUser.find(session[:user_id])
+    end
+  end
+
+  def createclient
+    puts "______________"
+      puts params[:clientname]
+
+
+    user = OauthUser.find(session[:user_id])
+
+    secret = SecureRandom.hex(50)
+    client_id = SecureRandom.hex(18)
+    user.oauth_clients.create(name: params[:clientname], client_secret: secret, client_id: client_id)
+
+
+    puts user
+    puts "______________"
+      redirect_to "/"
+
+
+
   end
 
   def adduser
