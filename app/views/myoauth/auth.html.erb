@@ -1,2 +1,11 @@
-<h1>Myoauth#auth</h1>
-<p>Find me in app/views/myoauth/auth.html.erb</p>
+<div class="container">
+  <div class="jumbotron">
+    <h3>Приложение пытается подключиться к вашему аккаунту</h3>
+    <p><b><%= @user_firstname %> <%= @user_lastname %></b>, приложение  <b><%= @client_name %></b>, пытается подключиться к вашему аккауту, чтобы получить данные.</p>
+    <h4>Разрешить <b><%= @client_name %></b> получить данные? </h4>
+    <p>
+      <a class="btn btn-success btn-lg">Раззрешить</a>
+      <a class="btn btn-danger btn-lg">Запретить</a>
+    </p>
+  </div>
+</div>
