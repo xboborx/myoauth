@@ -3,9 +3,12 @@
     <h3>Приложение пытается подключиться к вашему аккаунту</h3>
     <p><b><%= @user_firstname %> <%= @user_lastname %></b>, приложение  <b><%= @client_name %></b>, пытается подключиться к вашему аккауту, чтобы получить данные.</p>
     <h4>Разрешить <b><%= @client_name %></b> получить данные? </h4>
-    <p>
-      <a class="btn btn-success btn-lg">Раззрешить</a>
-      <a class="btn btn-danger btn-lg">Запретить</a>
-    </p>
+    <%= form_tag ('/myoauth/auth') do %>
+        <%= hidden_field_tag :client_id , params[:client_id] %>
+        <%= hidden_field_tag :redirect_uri , params[:redirect_uri] %>
+        <%= hidden_field_tag :response_type , params[:response_type] %>
+        <%= submit_tag 'Разрешить', class:  "btn btn-success btn-lg" %>
+        <%= submit_tag 'Запретить', class:  "btn btn-danger btn-lg" %>
+    <% end %>
   </div>
 </div>

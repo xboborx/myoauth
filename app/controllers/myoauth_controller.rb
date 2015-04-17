@@ -24,4 +24,30 @@ class MyoauthController < ApplicationController
     end
 
   end
+
+  def confirmation
+    if params[:commit] == 'Разрешить'
+      code = SecureRandom.hex(20)
+
+      coderec = OauthCode.new
+      coderec.code = code
+      coderec.oauth_user_id = session[:user_id]
+      coderec.expires = Time.now + 10.minutes
+      client = OauthClient.find_by_client_id(params[:client_id])
+      coderec.oauth_client_id = client.id
+
+      #coderec.create_oauth_user()
+      coderec.save
+      redirect_to "#{params[:redirect_uri]}?code=#{code}"
+    else
+      redirect_to "#{params[:redirect_uri]}?error=error"
+    end
+  end
+
+  def token
+    code = params[:code]
+  end
+
+
+
 end

@@ -11,8 +11,6 @@ class WelcomeController < ApplicationController
   end
 
   def createclient
-    puts "______________"
-      puts params[:clientname]
 
 
     user = OauthUser.find(session[:user_id])
@@ -22,12 +20,7 @@ class WelcomeController < ApplicationController
     user.oauth_clients.create(name: params[:clientname], client_secret: secret, client_id: client_id)
 
 
-    puts user
-    puts "______________"
       redirect_to "/"
-
-
-
   end
 
   def adduser
