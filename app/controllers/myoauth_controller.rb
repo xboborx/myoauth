@@ -46,6 +46,51 @@ class MyoauthController < ApplicationController
 
   def token
     code = params[:code]
+    client_id = params[:client_id]
+    client_secret = params[:client_secret]
+
+    puts '_______'
+    puts code
+    puts client_id
+    puts client_secret
+    puts '_______'
+
+
+    if params[:grant_type] == "grant_type"
+      client=OauthClient.find_by(client_id: client_id)
+      if client
+        if client.client_secret == client_secret
+          #
+          coderec = OauthCode.find_by(code: code)
+
+          if coderec
+            if coderec.oauth_client_id == client.id
+              puts '_______'
+              puts client.id
+              puts client.name
+
+              puts coderec.code
+              puts coderec.oauth_client_id
+              puts '_______'
+              render :json => JSON["ok"=> coderec.oauth_client_id], :status => 400
+            else
+              render :json => JSON["error"=> "invalid_request"], :status => 400
+            end
+          else
+            render :json => JSON["error"=> "invalid_request", "error_description" => "code is invalid"], :status => 400
+          end
+          #
+        else
+          render :json => JSON["error"=> "invalid_request", "error_description" => "client_secret is invalid"], :status => 400
+        end
+      else
+        render :json => JSON["error"=> "invalid_request", "error_description" => "client_id is invalid"], :status => 400
+      end
+    else
+      render :json => JSON["error"=> "invalid_request"], :status => 400
+    end
+
+
   end
 
 
