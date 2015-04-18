@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'myoauth/auth'
   post 'myoauth/auth' => 'myoauth#confirmation'
   post 'myoauth/token' => 'myoauth#token'
+  post 'myoauth/token/refresh' => 'myoauth#refresh'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -49,13 +49,6 @@ class MyoauthController < ApplicationController
     client_id = params[:client_id]
     client_secret = params[:client_secret]
 
-    puts '_______'
-    puts code
-    puts client_id
-    puts client_secret
-    puts '_______'
-
-
     if params[:grant_type] == "grant_type"
       client=OauthClient.find_by(client_id: client_id)
       if client
@@ -65,14 +58,16 @@ class MyoauthController < ApplicationController
 
           if coderec
             if coderec.oauth_client_id == client.id
-              puts '_______'
-              puts client.id
-              puts client.name
+              if coderec.expires < Time.now
+                ##create new token
+                accesstkn = addAccessToken(client.id, coderec.oauth_user_id)
+                refreshtkn = addRefreshToken(client.id, coderec.oauth_user_id)
+                render :json => JSON["access_token"=> accesstkn, "expires_in" => "120", "token_type"=>"Bearer", "refresh_token"=>refreshtkn]
+              else
+                render :json => JSON["error"=> "invalid_request", "error_description" => "code expired"], :status => 400
+              end
+              #coderec.destroy
 
-              puts coderec.code
-              puts coderec.oauth_client_id
-              puts '_______'
-              render :json => JSON["ok"=> coderec.oauth_client_id], :status => 400
             else
               render :json => JSON["error"=> "invalid_request"], :status => 400
             end
@@ -93,6 +88,29 @@ class MyoauthController < ApplicationController
 
   end
 
+  def refresh
 
+  end
+
+  def addAccessToken(oauth_client_id,oauth_user_id)
+    tkn = SecureRandom.hex(20)
+    tokenrec = OauthAccessToken.new
+    tokenrec.access_token = tkn
+    tokenrec.oauth_client_id = oauth_client_id
+    tokenrec.oauth_user_id = oauth_user_id
+    tokenrec.expires = Time.now + 2.minutes
+    tokenrec.save
+    return tkn
+  end
+
+  def addRefreshToken(oauth_client_id,oauth_user_id)
+    tkn = SecureRandom.hex(20)
+    tokenrec = OauthRefreshToken.new
+    tokenrec.refresh_token = tkn
+    tokenrec.oauth_client_id = oauth_client_id
+    tokenrec.oauth_user_id = oauth_user_id
+    tokenrec.save
+    return tkn
+  end
 
 end

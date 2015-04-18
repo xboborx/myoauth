@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150416180109) do
+ActiveRecord::Schema.define(version: 20150418180312) do
+
+  create_table "oauth_access_tokens", force: :cascade do |t|
+    t.string   "access_token"
+    t.integer  "oauth_client_id"
+    t.integer  "oauth_user_id"
+    t.datetime "expires"
+  end
 
   create_table "oauth_clients", force: :cascade do |t|
     t.string  "client_id"
@@ -27,6 +34,12 @@ ActiveRecord::Schema.define(version: 20150416180109) do
     t.integer  "oauth_client_id"
     t.integer  "oauth_user_id"
     t.datetime "expires"
+  end
+
+  create_table "oauth_refresh_tokens", force: :cascade do |t|
+    t.string  "refresh_token"
+    t.integer "oauth_client_id"
+    t.integer "oauth_user_id"
   end
 
   create_table "oauth_users", force: :cascade do |t|
