@@ -58,7 +58,8 @@ class MyoauthController < ApplicationController
 
           if coderec
             if coderec.oauth_client_id == client.id
-              if coderec.expires < Time.now
+              if coderec.expires > Time.now
+
                 ##create new token
                 accesstkn = addAccessToken(client.id, coderec.oauth_user_id)
                 refreshtkn = addRefreshToken(client.id, coderec.oauth_user_id)
@@ -66,8 +67,7 @@ class MyoauthController < ApplicationController
               else
                 render :json => JSON["error"=> "invalid_request", "error_description" => "code expired"], :status => 400
               end
-              #coderec.destroy
-
+              coderec.destroy
             else
               render :json => JSON["error"=> "invalid_request"], :status => 400
             end
@@ -89,7 +89,32 @@ class MyoauthController < ApplicationController
   end
 
   def refresh
+    if params[:grant_type] == 'refresh_token'
+      if refreshrecord = OauthRefreshToken.find_by_refresh_token(params[:refresh_token])
+        #create new access
+        accesstoken = OauthAccessToken.new
+        accesstoken.access_token = SecureRandom.hex(20)
+        accesstoken.oauth_client_id = refreshrecord.oauth_client_id
+        accesstoken.oauth_user_id = refreshrecord.oauth_user_id
+        accesstoken.expires = Time.now + 2.minutes
+        accesstoken.save
+        #create new refresh
+        refreshtoken = OauthRefreshToken.new
+        refreshtoken.refresh_token = SecureRandom.hex(20)
+        refreshtoken.oauth_client_id = refreshrecord.oauth_client_id
+        refreshtoken.oauth_user_id = refreshrecord.oauth_user_id
+        refreshtoken.save
 
+        refreshrecord.destroy
+
+        render :json => JSON["access_token"=> accesstoken.access_token, "expires_in" => "120", "token_type"=>"Bearer", "refresh_token"=>refreshtoken.refresh_token]
+      else
+        render :json => JSON["error"=> "invalid_request", "error_description" => "Invalid refresh token"], :status => 400
+
+      end
+    else
+      render :json => JSON["error"=> "invalid_request", "error_description" => "The request includes an invalid parameter value or includes an invalid parameter value"], :status => 400
+    end
   end
 
   def addAccessToken(oauth_client_id,oauth_user_id)
@@ -112,5 +137,7 @@ class MyoauthController < ApplicationController
     tokenrec.save
     return tkn
   end
+
+
 
 end

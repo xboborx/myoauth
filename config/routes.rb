@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
+  get 'users/me'
 
 
   # You can have the root of your site routed with "root"
