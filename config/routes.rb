@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  namespace :data do
+    resources :cars, only: [:index, :show]
+  end
+
+  get '/cars/:id' => 'data#cars_show'
+  get '/cars' => 'data#cars_index'
+  get '/brands/:id' => 'data#brands_show'
+  get '/brands' => 'data#brands_index'
+
   get 'myoauth/auth'
   post 'myoauth/auth' => 'myoauth#confirmation'
   post 'myoauth/token' => 'myoauth#token'
@@ -22,7 +31,6 @@ Rails.application.routes.draw do
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
   get 'users/me'
-
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'

@@ -38,10 +38,6 @@ class UsersController < ApplicationController
 
   end
 
-  def verification_token
-
-  end
-
 
 private
   

@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150418180312) do
+ActiveRecord::Schema.define(version: 20150421094431) do
+
+  create_table "brands", force: :cascade do |t|
+    t.string  "name"
+    t.string  "country"
+    t.integer "year"
+  end
+
+  create_table "cars", force: :cascade do |t|
+    t.string  "model"
+    t.integer "year"
+    t.integer "brand_id"
+    t.string  "color"
+  end
 
   create_table "oauth_access_tokens", force: :cascade do |t|
     t.string   "access_token"
