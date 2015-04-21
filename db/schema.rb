@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150421094431) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "brands", force: :cascade do |t|
     t.string  "name"
     t.string  "country"
@@ -40,7 +43,7 @@ ActiveRecord::Schema.define(version: 20150421094431) do
     t.string  "name"
   end
 
-  add_index "oauth_clients", ["oauth_user_id"], name: "index_oauth_clients_on_oauth_user_id"
+  add_index "oauth_clients", ["oauth_user_id"], name: "index_oauth_clients_on_oauth_user_id", using: :btree
 
   create_table "oauth_codes", force: :cascade do |t|
     t.string   "code"
@@ -62,6 +65,6 @@ ActiveRecord::Schema.define(version: 20150421094431) do
     t.string "last_name"
   end
 
-  add_index "oauth_users", ["username"], name: "index_oauth_users_on_username", unique: true
+  add_index "oauth_users", ["username"], name: "index_oauth_users_on_username", unique: true, using: :btree
 
 end
