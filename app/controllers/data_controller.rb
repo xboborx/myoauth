@@ -2,9 +2,7 @@ class DataController < ApplicationController
   require 'json'
 
   def cars_show
-    unless verification
-      puts "sososos"
-    else
+    if verification
       resource = Car.find_by( id: params[:id])
       if resource
         render :json => JSON.pretty_generate(resource.as_json)
@@ -15,11 +13,29 @@ class DataController < ApplicationController
   end
 
   def cars_index
-    render :json => JSON["error" => "not found"], :status => 404
+    if verification
+      cars = Car.paginate(:page => params[:page], :per_page => params[:per_page])
+
+      render :json => {
+                 :current_page => cars.current_page,
+                 :per_page => cars.per_page,
+                 :total_entries => cars.total_entries,
+                 :entries => cars
+      }
+    end
   end
 
   def brands_index
-    render :json => JSON["error" => "not found"], :status => 404
+    if verification
+      brands = Brand.paginate(:page => params[:page], :per_page => params[:per_page])
+
+      render :json => {
+                 :current_page => brands.current_page,
+                 :per_page => brands.per_page,
+                 :total_entries => brands.total_entries,
+                 :entries => brands
+             }
+    end
   end
 
   def brands_show
