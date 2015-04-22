@@ -40,7 +40,7 @@ class MyoauthController < ApplicationController
       coderec.save
       redirect_to "#{params[:redirect_uri]}?code=#{code}"
     else
-      redirect_to "#{params[:redirect_uri]}?error=error"
+      redirect_to "#{params[:redirect_uri]}?error=access_denied"
     end
   end
 
